@@ -26,7 +26,9 @@ colab_run.ipynb  Convenience launcher for Google Colab (all logic lives in the .
 checkpoints/best/best.pt   Trained model for the best configuration
 ```
 
-## Environment
+## Setup
+
+These are the versions used for the results below.
 
 | | Version |
 |---|---|
@@ -36,50 +38,68 @@ checkpoints/best/best.pt   Trained model for the best configuration
 | wandb | 0.28.1 |
 | Hardware | Google Colab, NVIDIA Tesla T4 (the code also runs on Apple MPS and on CPU) |
 
+Install the packages, then sign in to W&B.
+
 ```bash
 pip install -r requirements.txt
 wandb login
 ```
 
+You don't need to download CIFAR-10 yourself. The code downloads it the first time you run it and saves it in `./data`.
+
 ## Data
 
-- **Split:** the 50,000 CIFAR-10 training images are split into 45,000 train and 5,000 validation images, using a fixed seed. The 10,000-image test set is used only for final reporting.
-- **Normalisation:** per-channel mean `(0.4914, 0.4822, 0.4465)` and std `(0.2470, 0.2435, 0.2616)`.
-- **Training augmentation:** `RandomCrop(32, padding=4)` and `RandomHorizontalFlip()`.
-- **Validation and test:** `ToTensor()` and `Normalize` only, with no augmentation.
+- **Split:** the 50,000 training images are split into 45,000 for training and 5,000 for validation. The split is the same in every run. The 10,000 test images are used only for the final results.
+- **Normalisation:** each colour channel uses mean `(0.4914, 0.4822, 0.4465)` and std `(0.2470, 0.2435, 0.2616)`.
+- **Training images:** these also get `RandomCrop(32, padding=4)` and `RandomHorizontalFlip()`.
+- **Validation and test images:** these only get `ToTensor()` and `Normalize`.
 
 ## Seed
 
-All runs use `--seed 42`. The seed sets Python, NumPy and PyTorch (CPU and CUDA), and the train/val split. cuDNN runs in deterministic mode (`deterministic=True`, `benchmark=False`).
+All runs use `--seed 42`. This sets the random seed for Python, NumPy and PyTorch, and it fixes the train/validation split. cuDNN also runs in deterministic mode (`deterministic=True`, `benchmark=False`).
 
-## Reproduce
+## How to run
 
-**Reproduce the best configuration (Q4):**
+Run these commands from the main project folder.
+
+### Check the saved model
+
+This is the quickest check. It loads the saved model and prints its validation and test accuracy, without any training.
+
+```bash
+python evaluate.py --checkpoint checkpoints/best/best.pt
+```
+
+### Train the best model again (Q4)
+
+This trains the best configuration for 30 epochs, then checks the new model. It took about 10 minutes on a T4 GPU.
 
 ```bash
 python train.py --activation silu --optimizer nesterov --lr 0.05 --batch_size 128 --epochs 30 --seed 42 --save_dir checkpoints/best
 python evaluate.py --checkpoint checkpoints/best/best.pt
 ```
 
-**Evaluate the uploaded model without retraining:**
+This replaces the saved `checkpoints/best/best.pt`. To keep it, use a different folder after `--save_dir` and in the `evaluate.py` command.
 
-```bash
-python evaluate.py --checkpoint checkpoints/best/best.pt
-```
+### Run all the sweeps (Q2, Q3)
 
-**Run all configuration sweeps (Q2, Q3):**
+This runs all three sweeps, 17 runs in total, and logs them to W&B. It took about an hour on a T4 GPU.
 
 ```bash
 bash run_sweeps.sh CS6886W-SEDL-Assignment1-VGG6
 ```
 
-**Train one configuration by hand:**
+### Train one configuration
+
+Change the values to try a different setup.
 
 ```bash
 python train.py --activation relu --optimizer adam --batch_size 128 --epochs 10
 ```
 
-If `--lr` is left out, each optimizer gets its own default:
+Add `--no_wandb` if you don't want to log the run to W&B.
+
+If you leave out `--lr`, each optimizer uses its own default:
 
 | Optimizer | Default `--lr` |
 |---|---|
@@ -87,7 +107,7 @@ If `--lr` is left out, each optimizer gets its own default:
 | Adagrad | 0.01 |
 | Adam, RMSprop, Nadam | 0.001 |
 
-All runs use these settings:
+Unless you change them, all runs use:
 
 - weight decay 5e-4
 - momentum 0.9, for the optimizers that use it
