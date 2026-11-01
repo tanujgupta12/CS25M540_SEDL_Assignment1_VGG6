@@ -1,3 +1,4 @@
+<!-- Created by Tanuj Gupta (CS25M540) -->
 # VGG6 on CIFAR-10: activations, optimizers and hyperparameters
 
 CS6886W Systems Engineering for Deep Learning, Assignment 1. Name: Tanuj. Roll no: CS25M540.

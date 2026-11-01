@@ -1,3 +1,4 @@
+# Created by Tanuj Gupta (CS25M540)
 torch>=2.2
 torchvision>=0.17
 wandb>=0.17

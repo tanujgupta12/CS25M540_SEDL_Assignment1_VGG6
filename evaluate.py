@@ -1,3 +1,4 @@
+# Created by Tanuj Gupta (CS25M540)
 """Evaluate a saved VGG6 checkpoint on the CIFAR-10 validation and test sets.
 
 Example:

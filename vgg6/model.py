@@ -1,3 +1,4 @@
+# Created by Tanuj Gupta (CS25M540)
 """VGG6 for CIFAR-10 with a configurable activation function."""
 import torch.nn as nn
 

@@ -1,3 +1,4 @@
+# Created by Tanuj Gupta (CS25M540)
 """Train VGG6 on CIFAR-10 with one configuration and log everything to W&B.
 
 Run directly with command-line flags, or let a W&B sweep agent call it

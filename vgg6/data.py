@@ -1,3 +1,4 @@
+# Created by Tanuj Gupta (CS25M540)
 """CIFAR-10 loading: normalisation, augmentation and a fixed train/validation split."""
 import torch
 from torch.utils.data import DataLoader, Subset

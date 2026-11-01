@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Created by Tanuj Gupta (CS25M540)
 # Creates the three W&B sweeps for Q2 and runs an agent for each, one after another.
 # Usage: bash run_sweeps.sh [project-name]
 set -euo pipefail
