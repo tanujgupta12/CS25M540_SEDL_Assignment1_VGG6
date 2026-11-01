@@ -1,0 +1,12 @@
+# Q2(b): vary only the optimizer. lr is left out so each optimizer uses its own
+# default from vgg6/optim.py (Adam-style methods diverge at SGD learning rates).
+program: train.py
+name: optimizer-sweep
+method: grid
+metric: {name: val_acc, goal: maximize}
+parameters:
+  optimizer: {values: [sgd, nesterov, adam, adagrad, rmsprop, nadam]}
+  activation: {value: relu}
+  batch_size: {value: 128}
+  epochs: {value: 10}
+  seed: {value: 42}

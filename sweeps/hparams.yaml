@@ -1,0 +1,13 @@
+# Q2(c): vary batch size, epochs and learning rate (random sample of the grid;
+# run the agent with --count 6 to stay within time)
+program: train.py
+name: hparam-sweep
+method: random
+metric: {name: val_acc, goal: maximize}
+parameters:
+  batch_size: {values: [64, 128, 256]}
+  lr: {values: [0.01, 0.05, 0.1]}
+  epochs: {values: [5, 10, 15]}
+  activation: {value: relu}
+  optimizer: {value: nesterov}
+  seed: {value: 42}

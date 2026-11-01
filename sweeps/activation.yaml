@@ -1,0 +1,12 @@
+# Q2(a): vary only the activation; everything else fixed at the baseline
+program: train.py
+name: activation-sweep
+method: grid
+metric: {name: val_acc, goal: maximize}
+parameters:
+  activation: {values: [relu, sigmoid, tanh, silu, gelu]}
+  optimizer: {value: nesterov}
+  lr: {value: 0.05}
+  batch_size: {value: 128}
+  epochs: {value: 10}
+  seed: {value: 42}
