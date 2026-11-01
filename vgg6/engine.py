@@ -1,3 +1,4 @@
+# MTech IIT Madras || System Engineering for Deep Learning || Assignment 1
 # Created by Tanuj Gupta (CS25M540)
 """One epoch of training and a full pass of evaluation."""
 import torch

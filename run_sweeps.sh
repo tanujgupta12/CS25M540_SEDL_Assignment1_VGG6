@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# MTech IIT Madras || System Engineering for Deep Learning || Assignment 1
 # Created by Tanuj Gupta (CS25M540)
 # Creates the three W&B sweeps for Q2 and runs an agent for each, one after another.
 # Usage: bash run_sweeps.sh [project-name]

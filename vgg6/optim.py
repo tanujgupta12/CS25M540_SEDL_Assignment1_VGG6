@@ -1,3 +1,4 @@
+# MTech IIT Madras || System Engineering for Deep Learning || Assignment 1
 # Created by Tanuj Gupta (CS25M540)
 """Optimizer factory. Each optimizer gets a sensible default learning rate when none is given."""
 import torch.optim as optim
